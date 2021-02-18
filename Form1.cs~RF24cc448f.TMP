@@ -1,0 +1,117 @@
+﻿using System;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace HaloFitnessApp
+{
+    public partial class MainForm : Form
+    {
+        public MainForm()
+        {
+            InitializeComponent();
+        }
+        int NumberOfAttempts = 0;
+        const int INCREMENT = 2, FORMWIDTH = 954, FORMSTARTHEIGHT = 380, FORMEXPANDHEIGHT = 620;
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            MembershipDetailsGroupBox.Visible = false;
+            PricingGroupBox.Visible = false;
+            SummaryGroupBox.Visible = false;
+            SearchGroupBox.Visible = false;
+            ButtonPanel.Visible = false;
+            PasswordPanel.Visible = true;
+            this.Size = new Size(FORMWIDTH,FORMSTARTHEIGHT);
+        }
+
+        private void PasswordSubmitButton_Click(object sender, EventArgs e)
+        {
+            NumberOfAttempts++;
+            const int MaximumAttempts=3;
+            String TempPassword = PasswordTextBox.Text;
+            const string PASSWORD="ILuvVisualC#";
+            if (NumberOfAttempts < MaximumAttempts)
+            {
+                if (TempPassword == PASSWORD)
+                {
+                    PasswordPanel.Visible = false;
+                    PricingGroupBox.Visible = true;
+                    ButtonPanel.Visible = true;
+                }
+                else 
+                {
+                    MessageBox.Show("Number of attemps left :" + NumberOfAttempts + "\n" + "Please type the valid password");
+                    NumberOfAttempts --;
+                }
+           
+            }
+            else
+            {
+                MessageBox.Show("You have exceeded maximum number of attempts"+"\n"+"Please try after sometime");
+            }
+        }
+
+        private void DisplayButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ProceedButton_Click(object sender, EventArgs e)
+        {
+            MembershipDetailsGroupBox.Visible = true;
+        }
+
+        private void ConfirmButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ClearButton_Click(object sender, EventArgs e)
+        {           
+
+            if ((SummaryGroupBox.Visible) || (SearchGroupBox.Visible))
+                {
+                    for (int i = 620; i > 380; i -= INCREMENT)
+                    {
+                        this.Size = new Size(FORMWIDTH, i);
+                        this.Update();
+                        System.Threading.Thread.Sleep(1);
+                    }
+                }
+            SummaryGroupBox.Visible = false;
+            SearchGroupBox.Visible = false;
+        }
+
+        private void SummaryButton_Click(object sender, EventArgs e)
+        {
+            SearchGroupBox.Visible = false;
+            SummaryGroupBox.Visible = true;
+
+            for (int i = FORMSTARTHEIGHT; i < FORMEXPANDHEIGHT; i += INCREMENT)
+            {
+                this.Size = new Size(FORMWIDTH, i);
+                this.Update();
+                System.Threading.Thread.Sleep(1);
+            }            
+        }       
+
+        private void SearchButton_Click(object sender, EventArgs e)
+        {
+            SummaryGroupBox.Visible = false;
+            SearchGroupBox.Visible = true;
+
+            for (int i = FORMSTARTHEIGHT; i < FORMEXPANDHEIGHT; i += INCREMENT)
+            {
+                this.Size = new Size(FORMWIDTH, i);
+                this.Update();
+                System.Threading.Thread.Sleep(1);
+            }           
+        }
+
+        private void ExitButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+
+        }   
+    }
+}
